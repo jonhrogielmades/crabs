@@ -15,7 +15,14 @@
 
         <div class="field-group">
             <label for="login-password">Password</label>
-            <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
+            <div class="field-icon password-field">
+                <i data-lucide="lock-keyhole"></i>
+                <input id="login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+                <button class="password-toggle" type="button" data-password-toggle aria-controls="login-password" aria-label="Show password" aria-pressed="false">
+                    <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                    <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                </button>
+            </div>
             @error('password')<p class="error">{{ $message }}</p>@enderror
         </div>
 

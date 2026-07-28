@@ -159,7 +159,14 @@
             </div>
             <div class="field-group">
                 <label for="modal-login-password">Password</label>
-                <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="modal-login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
+                <div class="field-icon password-field">
+                    <i data-lucide="lock-keyhole"></i>
+                    <input id="modal-login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+                    <button class="password-toggle" type="button" data-password-toggle aria-controls="modal-login-password" aria-label="Show password" aria-pressed="false">
+                        <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                        <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
             <label class="auth-check"><input type="checkbox" name="remember"> <span>Remember me on this device</span></label>
             <button class="button auth-submit"><i data-lucide="log-in"></i>Login</button>
@@ -182,11 +189,25 @@
             <div class="field-grid">
                 <div class="field-group">
                     <label for="modal-register-password">Password</label>
-                    <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="modal-register-password" name="password" type="password" placeholder="Password" autocomplete="new-password" required></div>
+                    <div class="field-icon password-field">
+                        <i data-lucide="lock-keyhole"></i>
+                        <input id="modal-register-password" name="password" type="password" placeholder="Password" autocomplete="new-password" required>
+                        <button class="password-toggle" type="button" data-password-toggle aria-controls="modal-register-password" aria-label="Show password" aria-pressed="false">
+                            <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                            <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="field-group">
                     <label for="modal-register-password-confirmation">Confirm password</label>
-                    <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="modal-register-password-confirmation" name="password_confirmation" type="password" placeholder="Confirm" autocomplete="new-password" required></div>
+                    <div class="field-icon password-field">
+                        <i data-lucide="lock-keyhole"></i>
+                        <input id="modal-register-password-confirmation" name="password_confirmation" type="password" placeholder="Confirm" autocomplete="new-password" required>
+                        <button class="password-toggle" type="button" data-password-toggle aria-controls="modal-register-password-confirmation" aria-label="Show password" aria-pressed="false">
+                            <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                            <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <button class="button auth-submit"><i data-lucide="user-plus"></i>Register</button>

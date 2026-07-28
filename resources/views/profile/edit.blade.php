@@ -42,16 +42,37 @@
     <div class="field-grid">
         <div class="field-group">
             <label for="currentPassword">Current password</label>
-            <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="currentPassword" name="current_password" type="password" autocomplete="current-password"></div>
+            <div class="field-icon password-field">
+                <i data-lucide="lock-keyhole"></i>
+                <input id="currentPassword" name="current_password" type="password" autocomplete="current-password">
+                <button class="password-toggle" type="button" data-password-toggle aria-controls="currentPassword" aria-label="Show password" aria-pressed="false">
+                    <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                    <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
         <div class="field-group">
             <label for="newPassword">New password</label>
-            <div class="field-icon"><i data-lucide="shield-check"></i><input id="newPassword" name="password" type="password" autocomplete="new-password"></div>
+            <div class="field-icon password-field">
+                <i data-lucide="shield-check"></i>
+                <input id="newPassword" name="password" type="password" autocomplete="new-password">
+                <button class="password-toggle" type="button" data-password-toggle aria-controls="newPassword" aria-label="Show password" aria-pressed="false">
+                    <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                    <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
     </div>
     <div class="field-group">
         <label for="confirmPassword">Confirm password</label>
-        <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="confirmPassword" name="password_confirmation" type="password" autocomplete="new-password"></div>
+        <div class="field-icon password-field">
+            <i data-lucide="lock-keyhole"></i>
+            <input id="confirmPassword" name="password_confirmation" type="password" autocomplete="new-password">
+            <button class="password-toggle" type="button" data-password-toggle aria-controls="confirmPassword" aria-label="Show password" aria-pressed="false">
+                <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
     @foreach($errors->all() as $error)<p class="error">{{ $error }}</p>@endforeach
     <button class="button" type="submit"><i data-lucide="save"></i>Save Profile</button>

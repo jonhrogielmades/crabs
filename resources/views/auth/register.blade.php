@@ -22,12 +22,26 @@
         <div class="field-grid">
             <div class="field-group">
                 <label for="register-password">Password</label>
-                <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="register-password" name="password" type="password" placeholder="Password" autocomplete="new-password" required></div>
+                <div class="field-icon password-field">
+                    <i data-lucide="lock-keyhole"></i>
+                    <input id="register-password" name="password" type="password" placeholder="Password" autocomplete="new-password" required>
+                    <button class="password-toggle" type="button" data-password-toggle aria-controls="register-password" aria-label="Show password" aria-pressed="false">
+                        <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                        <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                    </button>
+                </div>
                 @error('password')<p class="error">{{ $message }}</p>@enderror
             </div>
             <div class="field-group">
                 <label for="register-password-confirmation">Confirm password</label>
-                <div class="field-icon"><i data-lucide="lock-keyhole"></i><input id="register-password-confirmation" name="password_confirmation" type="password" placeholder="Confirm" autocomplete="new-password" required></div>
+                <div class="field-icon password-field">
+                    <i data-lucide="lock-keyhole"></i>
+                    <input id="register-password-confirmation" name="password_confirmation" type="password" placeholder="Confirm" autocomplete="new-password" required>
+                    <button class="password-toggle" type="button" data-password-toggle aria-controls="register-password-confirmation" aria-label="Show password" aria-pressed="false">
+                        <i class="password-eye" data-lucide="eye" aria-hidden="true"></i>
+                        <i class="password-eye-off" data-lucide="eye-off" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
         </div>
 

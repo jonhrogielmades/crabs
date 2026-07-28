@@ -1337,6 +1337,97 @@ body.landing-page{
 .landing-page .hero-trust{
     margin-top:14px;
 }
+.landing-page .topbar{
+    gap:8px;
+}
+.landing-page .topbar-actions{
+    flex:0 0 auto;
+    gap:6px;
+}
+.landing-page .topbar-actions a.ghost-button,
+.landing-page .topbar-actions a.button.small{
+    display:inline-flex;
+    width:auto;
+    min-width:0;
+    height:38px;
+    padding:0 10px;
+    gap:6px;
+    font-size:12px;
+    line-height:1;
+    white-space:nowrap;
+}
+.landing-page .topbar-actions a.ghost-button span,
+.landing-page .topbar-actions a.button.small span{
+    display:inline !important;
+}
+.landing-page .topbar-actions a.ghost-button svg,
+.landing-page .topbar-actions a.button.small svg{
+    width:16px;
+    height:16px;
+}
+.landing-page .hero-trust span,
+.landing-page .hero-image-badge{
+    border-color:#bfe4df;
+    background:rgba(255,255,255,.94);
+    color:#173f3b;
+    box-shadow:0 10px 24px rgba(15,23,42,.08);
+}
+.landing-page .hero-trust svg,
+.landing-page .hero-image-badge svg{
+    color:#0f766e;
+    stroke-width:2.5;
+}
+.field-icon.password-field input{
+    padding-right:48px;
+}
+.password-toggle{
+    position:absolute;
+    right:7px;
+    top:50%;
+    z-index:2;
+    display:grid;
+    place-items:center;
+    width:34px;
+    height:34px;
+    padding:0;
+    transform:translateY(-50%);
+    border:0;
+    border-radius:8px;
+    background:transparent;
+    color:#64748b;
+    cursor:pointer;
+}
+.password-toggle:hover,
+.password-toggle:focus-visible{
+    background:#e6f6f3;
+    color:#0f766e;
+}
+.password-toggle svg{
+    position:static;
+    width:18px;
+    height:18px;
+    transform:none;
+    color:currentColor;
+    pointer-events:none;
+}
+.password-toggle .password-eye-off{
+    display:none;
+}
+.password-toggle svg:nth-child(2){
+    display:none;
+}
+.password-toggle[aria-pressed="true"] .password-eye{
+    display:none;
+}
+.password-toggle[aria-pressed="true"] svg:first-child{
+    display:none;
+}
+.password-toggle[aria-pressed="true"] .password-eye-off{
+    display:block;
+}
+.password-toggle[aria-pressed="true"] svg:nth-child(2){
+    display:block;
+}
 /* Global mobile scroll stabilization */
 html,
 body{
@@ -4602,4 +4693,45 @@ html[data-theme="night"] .feature-row span svg{
 html[data-theme="night"] .species-card .species-icon{
     background:#123d37 !important;
     color:#5eead4 !important;
+}
+html[data-theme="night"] .landing-page .topbar-actions a.ghost-button{
+    border-color:#2d5a54;
+    background:#102c28;
+    color:#99f6e4;
+}
+html[data-theme="night"] .landing-page .topbar-actions a.button.small{
+    background:#0f766e;
+    color:#fff;
+    box-shadow:0 10px 22px rgba(45,212,191,.2);
+}
+html[data-theme="night"] .landing-page .topbar-actions a.ghost-button span,
+html[data-theme="night"] .landing-page .topbar-actions a.button.small span{
+    color:currentColor !important;
+}
+html[data-theme="night"] .landing-page .hero-trust span,
+html[data-theme="night"] .landing-page .hero-image-badge{
+    border-color:#2d5a54 !important;
+    background:rgba(16,44,40,.96) !important;
+    color:#ecfeff !important;
+    box-shadow:0 10px 24px rgba(0,0,0,.28);
+}
+html[data-theme="night"] .landing-page .hero-trust svg,
+html[data-theme="night"] .landing-page .hero-image-badge svg{
+    color:#5eead4 !important;
+}
+html[data-theme="night"] .landing-page .hero-visual{
+    border-color:#2d5a54;
+    background:#0b211e;
+    box-shadow:0 22px 60px rgba(0,0,0,.42);
+}
+html[data-theme="night"] .landing-page .hero-visual img{
+    opacity:1;
+}
+html[data-theme="night"] .password-toggle{
+    color:#99f6e4;
+}
+html[data-theme="night"] .password-toggle:hover,
+html[data-theme="night"] .password-toggle:focus-visible{
+    background:#102c28;
+    color:#ecfeff;
 }

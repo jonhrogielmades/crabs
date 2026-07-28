@@ -1,6 +1,6 @@
-import { createIcons, Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } from 'lucide';
+import { createIcons, Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, Eye, EyeOff, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } from 'lucide';
 
-createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } });
+createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, Eye, EyeOff, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } });
 
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const themeLabel = themeToggle?.querySelector('[data-theme-label]');
@@ -169,7 +169,7 @@ function openAuthModal(mode = 'login') {
     registerModalForm.hidden = !isRegister;
     authModal.hidden = false;
     document.body.classList.add('modal-open');
-    createIcons({ icons: { LogIn, LockKeyhole, Mail, UserPlus, UserRound, X } });
+    createIcons({ icons: { Eye, EyeOff, LogIn, LockKeyhole, Mail, UserPlus, UserRound, X } });
 
     const firstInput = (isRegister ? registerModalForm : loginModalForm).querySelector('input');
     setTimeout(() => firstInput?.focus(), 30);
@@ -201,6 +201,17 @@ document.addEventListener('click', (event) => {
 
     if (event.target.closest('[data-more-close]')) {
         closeMoreSheet();
+    }
+
+    const passwordToggle = event.target.closest('[data-password-toggle]');
+    if (passwordToggle) {
+        const input = passwordToggle.closest('.password-field')?.querySelector('input');
+        if (!input) return;
+
+        const shouldShow = input.type === 'password';
+        input.type = shouldShow ? 'text' : 'password';
+        passwordToggle.setAttribute('aria-pressed', String(shouldShow));
+        passwordToggle.setAttribute('aria-label', shouldShow ? 'Hide password' : 'Show password');
     }
 });
 
