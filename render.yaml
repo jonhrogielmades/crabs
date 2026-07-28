@@ -2,15 +2,11 @@ services:
   - type: web
     name: crabs
     runtime: docker
-    plan: starter
+    plan: free
     region: singapore
     branch: main
     autoDeployTrigger: commit
     healthCheckPath: /
-    disk:
-      name: crabs-sqlite
-      mountPath: /var/www/html/database
-      sizeGB: 1
     envVars:
       - key: APP_NAME
         value: Crab Recognition AI
@@ -67,7 +63,7 @@ services:
   - type: web
     name: crabs-ai-service
     runtime: python
-    plan: starter
+    plan: free
     region: singapore
     branch: main
     rootDir: ai-service
