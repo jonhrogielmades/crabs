@@ -45,6 +45,8 @@ services:
         value: crabs-ai-token
       - key: AI_REQUEST_TIMEOUT
         value: "60"
+      - key: AI_HEALTH_TIMEOUT
+        value: "12"
       - key: AI_CONFIDENCE_THRESHOLD
         value: "0.60"
       - key: AI_HIGH_CONFIDENCE_THRESHOLD

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="page-head"><div><p class="eyebrow">Operations center</p><h1>Admin Dashboard</h1></div><span class="badge"><i data-lucide="activity"></i>AI {{ $aiStatus }}</span></section>
+<section class="page-head"><div><p class="eyebrow">Operations center</p><h1>Admin Dashboard</h1></div><span class="badge" title="{{ $aiStatusDetail }}"><i data-lucide="activity"></i>AI {{ $aiStatus }}</span></section>
 <div class="admin-quick-actions">
     <a class="button muted" href="{{ route('admin.species.index') }}"><i data-lucide="database"></i>Species</a>
     <a class="button muted" href="{{ route('admin.feedback.index') }}"><i data-lucide="clipboard-check"></i>Feedback</a>

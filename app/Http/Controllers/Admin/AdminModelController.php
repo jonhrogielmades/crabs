@@ -36,6 +36,7 @@ class AdminModelController extends Controller
             'performance' => $performance,
             'activeModel' => ModelVersion::where('is_active', true)->first(),
             'aiStatus' => $health->status(),
+            'aiStatusDetail' => $health->detail(),
             'aiUrl' => config('services.ai.url'),
             'providerOrder' => config('services.ai.provider_order', []),
             'providerStatus' => $this->providerStatus(),

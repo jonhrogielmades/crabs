@@ -18,6 +18,7 @@ class DashboardController extends Controller
             'low' => (clone $records)->where('confidence_level', 'low')->count(),
             'speciesCount' => CrabSpecies::where('is_supported', true)->where('is_active', true)->count(),
             'aiStatus' => $health->status(),
+            'aiStatusDetail' => $health->detail(),
         ]);
     }
 }

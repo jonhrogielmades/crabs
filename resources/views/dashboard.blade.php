@@ -10,7 +10,7 @@
     <div class="dashboard-stat warning"><i data-lucide="alert-triangle"></i><span>Low confidence</span><strong>{{ $low }}</strong></div>
     <div class="dashboard-stat info"><i data-lucide="database"></i><span>Crab data</span><strong>{{ $speciesCount }}</strong></div>
 </section>
-<section class="status-strip dashboard-status"><span class="status-dot {{ $aiStatus === 'online' ? 'online' : '' }}"></span><div><strong>AI service {{ $aiStatus }}</strong><span>Recognition needs internet or a reachable AI service.</span></div></section>
+<section class="status-strip dashboard-status"><span class="status-dot {{ $aiStatus === 'online' ? 'online' : '' }}"></span><div><strong>AI recognition {{ $aiStatus }}</strong><span>{{ $aiStatusDetail }}</span></div></section>
 <section class="section-title dashboard-section-title"><div><p class="eyebrow">Activity</p><h2>Recent Results</h2></div><a href="{{ route('recognition.history') }}">View all <i data-lucide="arrow-right"></i></a></section>
 <div class="list app-list dashboard-list">
 @forelse($recent as $record)

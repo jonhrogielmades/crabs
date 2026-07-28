@@ -39,6 +39,7 @@ return [
         'url' => env('AI_SERVICE_URL', 'http://127.0.0.1:9000'),
         'token' => env('AI_SERVICE_TOKEN'),
         'timeout' => env('AI_REQUEST_TIMEOUT', 60),
+        'health_timeout' => env('AI_HEALTH_TIMEOUT', 12),
         'confidence_threshold' => env('AI_CONFIDENCE_THRESHOLD', 0.60),
         'high_confidence_threshold' => env('AI_HIGH_CONFIDENCE_THRESHOLD', 0.85),
         'consensus_enabled' => env('AI_CONSENSUS_ENABLED', true),

@@ -39,6 +39,7 @@ class AdminDashboardController extends Controller
                 ->get(),
             'recentFeedback' => RecognitionFeedback::with(['recognitionRecord.species', 'user'])->latest()->limit(5)->get(),
             'aiStatus' => $health->status(),
+            'aiStatusDetail' => $health->detail(),
         ]);
     }
 }

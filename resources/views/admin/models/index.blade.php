@@ -9,7 +9,7 @@
 </section>
 
 <section class="stats">
-    <div><i data-lucide="activity"></i><strong>{{ $aiStatus }}</strong><span>AI service</span></div>
+    <div><i data-lucide="activity"></i><strong>{{ $aiStatus }}</strong><span>{{ $aiStatusDetail }}</span></div>
     <div><i data-lucide="gauge"></i><strong>{{ number_format((float) $threshold * 100, 0) }}%</strong><span>Threshold</span></div>
     <div><i data-lucide="database"></i><strong>{{ $models->total() }}</strong><span>Registered versions</span></div>
     <div><i data-lucide="check-circle-2"></i><strong>{{ $activeModel?->version ?? 'None' }}</strong><span>Active version</span></div>
