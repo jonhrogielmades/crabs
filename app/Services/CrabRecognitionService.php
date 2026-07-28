@@ -40,7 +40,9 @@ class CrabRecognitionService
             return $this->buildConsensus($results, $errors);
         }
 
-        throw new RuntimeException('All configured AI recognition providers failed. '.implode(' | ', $errors));
+        return $this->unknownPayload([], $errors, [
+            'No AI recognition provider was available. Try again when the network and provider APIs are reachable.',
+        ]);
     }
 
     private function predictWithProvider(UploadedFile $image, string $provider): array

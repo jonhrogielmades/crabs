@@ -60,7 +60,7 @@ services:
       - key: AI_GLOBAL_DETECTION
         value: "true"
       - key: AI_PROVIDER_ORDER
-        value: gemini,anthropic,groq,openrouter,cohere,wisdomgate
+        value: gemini,anthropic,groq,openrouter,cohere,wisdomgate,local
       - key: GEMINI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY
