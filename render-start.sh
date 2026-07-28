@@ -19,7 +19,9 @@ fi
 if [ -z "$APP_KEY" ]; then
     export APP_KEY="base64:$(php -r 'echo base64_encode(random_bytes(32));')"
 elif [[ "$APP_KEY" != base64:* ]]; then
-    export APP_KEY="base64:$APP_KEY"
+    export RENDER_RAW_APP_KEY="$APP_KEY"
+    export APP_KEY="base64:$(php -r 'echo base64_encode(hash("sha256", getenv("RENDER_RAW_APP_KEY"), true));')"
+    unset RENDER_RAW_APP_KEY
 fi
 
 if [ -n "$AI_SERVICE_URL" ] && [[ "$AI_SERVICE_URL" != http://* ]] && [[ "$AI_SERVICE_URL" != https://* ]]; then
@@ -31,6 +33,7 @@ php artisan route:clear
 php artisan view:clear
 
 php artisan migrate --force
+php artisan db:seed --force
 php artisan storage:link || true
 
 php artisan config:cache
