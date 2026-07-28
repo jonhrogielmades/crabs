@@ -11,6 +11,17 @@ if [ -n "$PORT" ]; then
     sed -ri -e "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-available/*.conf
 fi
 
+if [ -n "$RENDER_EXTERNAL_HOSTNAME" ]; then
+    export APP_URL="${APP_URL:-https://$RENDER_EXTERNAL_HOSTNAME}"
+    export ASSET_URL="${ASSET_URL:-https://$RENDER_EXTERNAL_HOSTNAME}"
+fi
+
+if [ -z "$APP_KEY" ]; then
+    export APP_KEY="base64:$(php -r 'echo base64_encode(random_bytes(32));')"
+elif [[ "$APP_KEY" != base64:* ]]; then
+    export APP_KEY="base64:$APP_KEY"
+fi
+
 if [ -n "$AI_SERVICE_URL" ] && [[ "$AI_SERVICE_URL" != http://* ]] && [[ "$AI_SERVICE_URL" != https://* ]]; then
     export AI_SERVICE_URL="http://$AI_SERVICE_URL"
 fi

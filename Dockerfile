@@ -31,7 +31,8 @@ COPY --chown=www-data:www-data . .
 COPY --from=vendor --chown=www-data:www-data /app/vendor ./vendor
 COPY --from=assets --chown=www-data:www-data /app/public/build ./public/build
 
-RUN chmod +x render-start.sh \
+RUN composer dump-autoload --optimize \
+    && chmod +x render-start.sh \
     && chown -R www-data:www-data storage bootstrap/cache database
 
 EXPOSE 80
