@@ -1,4 +1,6 @@
 *.log
+__pycache__/
+*.py[cod]
 .DS_Store
 .env
 .env.backup
@@ -14,6 +16,7 @@
 /.zed
 /auth.json
 /node_modules
+/ai-service/.venv
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot

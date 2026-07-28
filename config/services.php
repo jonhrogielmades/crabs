@@ -35,4 +35,44 @@ return [
         ],
     ],
 
+    'ai' => [
+        'url' => env('AI_SERVICE_URL', 'http://127.0.0.1:9000'),
+        'token' => env('AI_SERVICE_TOKEN'),
+        'timeout' => env('AI_REQUEST_TIMEOUT', 60),
+        'confidence_threshold' => env('AI_CONFIDENCE_THRESHOLD', 0.60),
+        'high_confidence_threshold' => env('AI_HIGH_CONFIDENCE_THRESHOLD', 0.85),
+        'consensus_enabled' => env('AI_CONSENSUS_ENABLED', true),
+        'min_provider_agreement' => env('AI_MIN_PROVIDER_AGREEMENT', 2),
+        'allow_single_provider_result' => env('AI_ALLOW_SINGLE_PROVIDER_RESULT', true),
+        'global_detection' => env('AI_GLOBAL_DETECTION', true),
+        'provider_order' => array_values(array_filter(array_map('trim', explode(',', env('AI_PROVIDER_ORDER', 'gemini,anthropic,groq,openrouter,cohere,wisdomgate'))))),
+        'providers' => [
+            'gemini' => [
+                'key' => env('GEMINI_API_KEY'),
+                'model' => env('GEMINI_MODEL', 'gemini-2.5-flash-lite'),
+            ],
+            'cohere' => [
+                'key' => env('COHERE_API_KEY'),
+                'model' => env('COHERE_MODEL', 'command-r7b-12-2024'),
+            ],
+            'groq' => [
+                'key' => env('GROQ_API_KEY'),
+                'model' => env('GROQ_MODEL', 'openai/gpt-oss-20b'),
+            ],
+            'openrouter' => [
+                'key' => env('OPENROUTER_API_KEY'),
+                'model' => env('OPENROUTER_MODEL', 'openrouter/free'),
+            ],
+            'anthropic' => [
+                'key' => env('ANTHROPIC_API_KEY'),
+                'model' => env('ANTHROPIC_MODEL', 'claude-haiku-3-5-20241022'),
+                'version' => env('ANTHROPIC_VERSION', '2023-06-01'),
+            ],
+            'wisdomgate' => [
+                'key' => env('WISDOMGATE_API_KEY'),
+                'model' => env('WISDOMGATE_MODEL', 'gpt-5-nano'),
+            ],
+        ],
+    ],
+
 ];

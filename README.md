@@ -1,58 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Crab Recognition AI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+AI-Based Mobile Progressive Web Application for crab recognition using Laravel and a separate Python FastAPI inference service.
 
-## About Laravel
+This repository contains the Laravel PWA shell, recognition workflow, private image storage, role-based access, species directory, feedback, admin dashboard, PWA manifest/service worker, and a FastAPI adapter service. No trained crab model or manuscript dataset was found in the workspace, so sample species data and the Python predictor are clearly marked placeholders.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Install Laravel App
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+npm install
+npm run build
+php artisan storage:link
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Laragon users can run PHP with `C:\laragon\bin\php\php-8.3.29-nts-Win32-vs16-x64\php.exe` if PHP is not on PATH.
 
-## Contributing
+## Start AI Service
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cd ai-service
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --host 127.0.0.1 --port 9000
+```
 
-## Code of Conduct
+## Environment
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```env
+AI_SERVICE_URL=http://127.0.0.1:9000
+AI_SERVICE_TOKEN=
+AI_REQUEST_TIMEOUT=60
+AI_CONFIDENCE_THRESHOLD=0.60
+AI_HIGH_CONFIDENCE_THRESHOLD=0.85
+AI_CONSENSUS_ENABLED=true
+AI_MIN_PROVIDER_AGREEMENT=2
+AI_ALLOW_SINGLE_PROVIDER_RESULT=true
+AI_GLOBAL_DETECTION=true
+AI_PROVIDER_ORDER=gemini,anthropic,groq,openrouter,cohere,wisdomgate
+AI_MODEL_PATH=
+AI_MODEL_NAME="YOLO Crab Recognition Adapter"
+AI_MODEL_VERSION=placeholder-1.0.0
+AI_MODEL_CONFIDENCE_THRESHOLD=0.60
+AI_MODEL_CLASSES=
+```
 
-## Security Vulnerabilities
+Set `AI_MODEL_PATH` in the FastAPI environment to load a trained Ultralytics YOLO model. When no model path is configured, the adapter keeps returning the safe placeholder response.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Added Feature Areas
 
-## License
+- Admin species CRUD with model class mapping.
+- Admin feedback review with expert species corrections and retraining flags.
+- AI model registry, active-version control, and model metadata sync.
+- Recognition performance dashboard with low-confidence, failed-scan, reviewed-accuracy, and top-species metrics.
+- Detection-box overlay on result images when the AI returns normalized bounding boxes.
+- Offline scan queue in the PWA scanner.
+- Species directory search and filtering.
+- CSV and PDF recognition-history exports.
+- Optional scan location and capture notes.
+- Confidence-based result guidance.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Test Accounts
+
+- Administrator: `admin@example.com`
+- User: `test@example.com`
+
+Factory passwords use Laravel's default generated password. Set known passwords with Tinker or update the seeder before production use.
+
+## AI Endpoints
+
+- `GET /health`
+- `GET /api/v1/model`
+- `POST /api/v1/predict`
+
+## Important Limitations
+
+- No trained YOLOv26 weights, class-order file, preprocessing details, or evaluation metrics were present.
+- The FastAPI service validates images and returns deterministic placeholder no-detection responses until `AI_MODEL_PATH` points to a trained model and the optional model dependency is installed.
+- Seeded species information is placeholder text and must be replaced with verified manuscript/project data.
+- Recognition results are decision-support only and are not legal, medical, biological, food-safety, or scientific certification.
