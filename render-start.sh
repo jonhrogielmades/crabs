@@ -6,6 +6,11 @@ touch "${DB_DATABASE:-/var/www/html/database/database.sqlite}"
 
 chown -R www-data:www-data /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache
 
+if [ -n "$PORT" ]; then
+    sed -ri -e "s/^Listen 80$/Listen $PORT/" /etc/apache2/ports.conf
+    sed -ri -e "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-available/*.conf
+fi
+
 if [ -n "$AI_SERVICE_URL" ] && [[ "$AI_SERVICE_URL" != http://* ]] && [[ "$AI_SERVICE_URL" != https://* ]]; then
     export AI_SERVICE_URL="http://$AI_SERVICE_URL"
 fi
