@@ -75,7 +75,7 @@ textarea{min-height:110px;resize:vertical}
 
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:0;border-radius:8px;background:linear-gradient(135deg,var(--primary),#178f85);color:#fff;padding:11px 16px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(15,118,110,.2);user-select:none;-webkit-user-select:none}
-.button.muted{background:#e5f4f2;color:var(--primary-dark);box-shadow:none}.button.small{min-height:38px;padding:8px 13px}
+.button.muted{background:#e5f4f2;color:var(--primary-dark);box-shadow:none}.install-app-button{cursor:pointer}.install-app-button[aria-busy="true"]{opacity:.72;cursor:progress}.button.small{min-height:38px;padding:8px 13px}
 .notice,.panel,.card,.toast,.status-strip{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
 .notice{background:#effaf7;color:#285854}.toast{border-color:#9bd8cf;background:#f0fffc}
 .professional-note{display:flex;align-items:flex-start;gap:10px}.professional-note svg{width:18px;height:18px;color:var(--primary);flex:0 0 auto;margin-top:2px}

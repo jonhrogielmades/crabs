@@ -2,11 +2,23 @@ import { createIcons, Activity, AlertTriangle, ArrowRight, BarChart3, Bot, Camer
 
 createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Pencil, Plus, RefreshCw, Save, Search, SendHorizontal, Settings, ShieldCheck, Smartphone, Sparkles, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } });
 
+let deferredInstallPrompt;
+let serviceWorkerReady = false;
+
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => navigator.serviceWorker.ready)
+            .then(() => {
+                serviceWorkerReady = true;
+                updateInstallButtonState();
+            })
+            .catch(() => {
+                serviceWorkerReady = false;
+            });
+    });
 }
 
-let deferredInstallPrompt;
 window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
@@ -91,7 +103,7 @@ async function updateInstallButtonState() {
 
     installAppButton.classList.remove('is-installed');
     installAppButton.setAttribute('aria-label', 'Install app');
-    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Install from your browser menu';
+    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Preparing app install';
     installAppButton.querySelector('span')?.replaceChildren('Install App');
 }
 
@@ -173,6 +185,18 @@ installAppButton?.addEventListener('click', async () => {
     }
 
     if (!deferredInstallPrompt) {
+        installAppButton.setAttribute('aria-busy', 'true');
+
+        if ('serviceWorker' in navigator && !serviceWorkerReady) {
+            try {
+                await navigator.serviceWorker.ready;
+                serviceWorkerReady = true;
+            } catch {
+                serviceWorkerReady = false;
+            }
+        }
+
+        installAppButton.removeAttribute('aria-busy');
         return;
     }
 
