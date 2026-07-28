@@ -102,9 +102,9 @@ async function updateInstallButtonState() {
     }
 
     installAppButton.classList.remove('is-installed');
-    installAppButton.setAttribute('aria-label', 'Install app');
-    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Preparing app install';
-    installAppButton.querySelector('span')?.replaceChildren('Install App');
+    installAppButton.setAttribute('aria-label', deferredInstallPrompt ? 'Install app' : 'Install app unavailable');
+    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Install is not available yet in this browser';
+    installAppButton.querySelector('span')?.replaceChildren(deferredInstallPrompt ? 'Install App' : 'Open in Chrome');
 }
 
 function openAuthModal(mode = 'login') {
@@ -197,6 +197,11 @@ installAppButton?.addEventListener('click', async () => {
         }
 
         installAppButton.removeAttribute('aria-busy');
+
+        if (!deferredInstallPrompt) {
+            alert('Install is not available yet. Open this site in Chrome or Edge, then wait a few seconds and tap Install App again.');
+        }
+
         return;
     }
 
