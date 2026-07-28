@@ -10,6 +10,7 @@ let deferredInstallPrompt;
 window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
+    updateInstallButtonState();
 });
 
 const installAppButton = document.getElementById('installAppButton');
@@ -47,6 +48,52 @@ const moreOpenButtons = Array.from(document.querySelectorAll('[data-more-open]')
 const mapBoard = document.querySelector('[data-map-points]');
 const mapGrid = document.getElementById('recognitionMapGrid');
 let stream;
+const installedAppStorageKey = 'crab-recognition-ai-installed';
+
+function isRunningAsInstalledApp() {
+    return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true
+        || document.referrer.startsWith('android-app://');
+}
+
+async function isAppAlreadyInstalled() {
+    if (isRunningAsInstalledApp()) {
+        return true;
+    }
+
+    if (localStorage.getItem(installedAppStorageKey) === 'true') {
+        return true;
+    }
+
+    if ('getInstalledRelatedApps' in navigator) {
+        try {
+            const relatedApps = await navigator.getInstalledRelatedApps();
+
+            return relatedApps.length > 0;
+        } catch {
+            return false;
+        }
+    }
+
+    return false;
+}
+
+async function updateInstallButtonState() {
+    if (!installAppButton) return;
+
+    if (await isAppAlreadyInstalled()) {
+        installAppButton.classList.add('is-installed');
+        installAppButton.setAttribute('aria-label', 'App already installed');
+        installAppButton.title = 'App already installed';
+        installAppButton.querySelector('span')?.replaceChildren('Installed');
+        return;
+    }
+
+    installAppButton.classList.remove('is-installed');
+    installAppButton.setAttribute('aria-label', 'Install app');
+    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Install from your browser menu';
+    installAppButton.querySelector('span')?.replaceChildren('Install App');
+}
 
 function openAuthModal(mode = 'login') {
     if (!authModal || !loginModalForm || !registerModalForm) return false;
@@ -119,15 +166,37 @@ function closeMoreSheet() {
 }
 
 installAppButton?.addEventListener('click', async () => {
+    if (await isAppAlreadyInstalled()) {
+        alert('Crab Recognition AI is already installed on this device.');
+        updateInstallButtonState();
+        return;
+    }
+
     if (!deferredInstallPrompt) {
         alert('To install the app, open your browser menu and choose Add to Home Screen or Install app.');
         return;
     }
 
     deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
+    const choice = await deferredInstallPrompt.userChoice;
     deferredInstallPrompt = null;
+
+    if (choice.outcome === 'accepted') {
+        alert('Crab Recognition AI is being installed on this device.');
+    }
+
+    updateInstallButtonState();
 });
+
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    localStorage.setItem(installedAppStorageKey, 'true');
+    alert('Crab Recognition AI has been installed on this device.');
+    updateInstallButtonState();
+});
+
+window.matchMedia('(display-mode: standalone)').addEventListener?.('change', updateInstallButtonState);
+updateInstallButtonState();
 
 async function startCamera() {
     try {

@@ -6,7 +6,7 @@
         <p>Capture or upload a crab image, send it to a secured AI inference service, and review species information with confidence and image-quality warnings.</p>
         <div class="actions">
             @auth <a class="button" href="{{ route('recognition.create') }}"><i data-lucide="camera"></i>Start Scan</a> @else <a class="button" href="{{ route('register') }}" data-auth-modal="register"><i data-lucide="user-plus"></i>Create Account</a> @endauth
-            <button class="button muted install-app-button" id="installAppButton" type="button"><i data-lucide="smartphone"></i>Install App</button>
+            <button class="button muted install-app-button" id="installAppButton" type="button"><i data-lucide="smartphone"></i><span>Install App</span></button>
         </div>
         <div class="hero-trust">
             <span><i data-lucide="shield-check"></i>Decision-support only</span>
