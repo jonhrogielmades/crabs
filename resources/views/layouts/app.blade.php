@@ -76,7 +76,7 @@
             </button>
             @auth
                 <span class="user-chip">{{ auth()->user()->name }}</span>
-                <form method="post" action="{{ route('logout') }}">@csrf<button class="ghost-button" aria-label="Logout"><i data-lucide="log-out"></i><span>Logout</span></button></form>
+                <form method="post" action="{{ route('logout') }}" data-loading-form data-loading-message="Logging out" data-loading-detail="Ending your session safely.">@csrf<button class="ghost-button" aria-label="Logout"><i data-lucide="log-out"></i><span>Logout</span></button></form>
             @else
                 @unless(request()->routeIs('login'))
                     <a class="ghost-button" href="{{ route('login') }}" aria-label="Login" data-auth-modal="login"><i data-lucide="log-in"></i><span>Login</span></a>
@@ -148,7 +148,7 @@
     <section class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
         <button class="auth-modal-close" type="button" aria-label="Close auth form" data-auth-close><i data-lucide="x"></i></button>
 
-        <form class="auth-card auth-modal-form" id="loginModalForm" method="post" action="{{ route('login') }}">@csrf
+        <form class="auth-card auth-modal-form" id="loginModalForm" method="post" action="{{ route('login') }}" data-loading-form data-loading-message="Logging in" data-loading-detail="Securing your workspace session.">@csrf
             <div class="auth-card-head">
                 <h2 id="authModalTitle">Login</h2>
                 <p>Use your registered account to access scans and detection history.</p>
@@ -216,5 +216,12 @@
     </section>
 </div>
 @endguest
+<div class="fullscreen-loader" id="fullscreenLoader" role="status" aria-live="polite" aria-busy="true" hidden>
+    <section class="fullscreen-loader-card" aria-labelledby="fullscreenLoaderTitle">
+        <span class="fullscreen-loader-spinner" aria-hidden="true"></span>
+        <h2 id="fullscreenLoaderTitle" data-loading-title>Please wait</h2>
+        <p data-loading-detail>Preparing your request.</p>
+    </section>
+</div>
 </body>
 </html>

@@ -98,7 +98,32 @@ const moreSheet = document.getElementById('moreSheet');
 const moreOpenButtons = Array.from(document.querySelectorAll('[data-more-open]'));
 const mapBoard = document.querySelector('[data-map-points]');
 const mapGrid = document.getElementById('recognitionMapGrid');
+const fullscreenLoader = document.getElementById('fullscreenLoader');
+const fullscreenLoaderTitle = fullscreenLoader?.querySelector('[data-loading-title]');
+const fullscreenLoaderDetail = fullscreenLoader?.querySelector('[data-loading-detail]');
 let stream;
+
+function showFullscreenLoader(message = 'Please wait', detail = 'Preparing your request.') {
+    if (!fullscreenLoader) return;
+
+    if (fullscreenLoaderTitle) {
+        fullscreenLoaderTitle.textContent = message;
+    }
+
+    if (fullscreenLoaderDetail) {
+        fullscreenLoaderDetail.textContent = detail;
+    }
+
+    fullscreenLoader.hidden = false;
+    document.body.classList.add('is-loading');
+}
+
+function hideFullscreenLoader() {
+    if (!fullscreenLoader) return;
+
+    fullscreenLoader.hidden = true;
+    document.body.classList.remove('is-loading');
+}
 
 function isRunningAsInstalledApp() {
     return window.matchMedia('(display-mode: standalone)').matches
@@ -224,6 +249,19 @@ document.addEventListener('keydown', (event) => {
         closeMoreSheet();
     }
 });
+
+document.addEventListener('submit', (event) => {
+    const form = event.target.closest('[data-loading-form]');
+    if (!form || (typeof form.checkValidity === 'function' && !form.checkValidity())) return;
+
+    showFullscreenLoader(form.dataset.loadingMessage, form.dataset.loadingDetail);
+    form.querySelectorAll('button[type="submit"], button:not([type]), input[type="submit"]').forEach((control) => {
+        control.disabled = true;
+        control.setAttribute('aria-busy', 'true');
+    });
+});
+
+window.addEventListener('pageshow', hideFullscreenLoader);
 
 function openMoreSheet() {
     if (!moreSheet) return;

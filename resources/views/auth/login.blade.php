@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <section class="auth-screen">
-    <form class="auth-card" method="post" action="{{ route('login') }}">@csrf
+    <form class="auth-card" method="post" action="{{ route('login') }}" data-loading-form data-loading-message="Logging in" data-loading-detail="Securing your workspace session.">@csrf
         <div class="auth-card-head">
             <h2>Login</h2>
             <p>Use your registered account to access scans and detection history.</p>
