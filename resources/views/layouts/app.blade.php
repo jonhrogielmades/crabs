@@ -11,11 +11,11 @@
     <meta name="apple-mobile-web-app-title" content="CrabAI">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="msapplication-TileColor" content="#0f766e">
-    <meta name="msapplication-TileImage" content="/icons/icon-144.png">
+    <meta name="msapplication-TileImage" content="/pwa-icon-192.png">
     <title>{{ $title ?? 'Crab Recognition AI' }}</title>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="apple-touch-icon" href="/pwa-icon-192.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="@if(request()->routeIs('home')) landing-page @endif @if(request()->routeIs('dashboard')) dashboard-page @endif @if(request()->routeIs('recognition.history')) history-page @endif @if(request()->routeIs('profile.*') || request()->routeIs('recognition.map') || request()->routeIs('reports.*') || request()->routeIs('training.*') || request()->routeIs('models.comparison') || request()->routeIs('species.show')) feature-page @endif @if(request()->routeIs('login') || request()->routeIs('register')) auth-page @endif @if(request()->routeIs('recognition.create')) scan-page @endif @if(request()->routeIs('recognition.show')) result-page @endif @if(request()->routeIs('crab-chat.index')) chat-page @endif">

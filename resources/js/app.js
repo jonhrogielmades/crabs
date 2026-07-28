@@ -4,6 +4,7 @@ createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BarChart3, Bot, Came
 
 let deferredInstallPrompt;
 let serviceWorkerReady = false;
+let installPromptWaiters = [];
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -22,6 +23,8 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     deferredInstallPrompt = event;
+    installPromptWaiters.forEach((resolve) => resolve(event));
+    installPromptWaiters = [];
     updateInstallButtonState();
 });
 
@@ -104,6 +107,24 @@ async function updateInstallButtonState() {
     installAppButton.querySelector('span')?.replaceChildren('Install App');
 }
 
+function waitForInstallPrompt(timeout = 4000) {
+    if (deferredInstallPrompt) {
+        return Promise.resolve(deferredInstallPrompt);
+    }
+
+    return new Promise((resolve) => {
+        const timer = setTimeout(() => {
+            installPromptWaiters = installPromptWaiters.filter((waiter) => waiter !== resolve);
+            resolve(null);
+        }, timeout);
+
+        installPromptWaiters.push((event) => {
+            clearTimeout(timer);
+            resolve(event);
+        });
+    });
+}
+
 function openAuthModal(mode = 'login') {
     if (!authModal || !loginModalForm || !registerModalForm) return false;
 
@@ -183,6 +204,7 @@ installAppButton?.addEventListener('click', async () => {
 
     if (!deferredInstallPrompt) {
         installAppButton.setAttribute('aria-busy', 'true');
+        installAppButton.querySelector('span')?.replaceChildren('Preparing...');
 
         if ('serviceWorker' in navigator && !serviceWorkerReady) {
             try {
@@ -193,7 +215,10 @@ installAppButton?.addEventListener('click', async () => {
             }
         }
 
+        await waitForInstallPrompt();
+
         installAppButton.removeAttribute('aria-busy');
+        installAppButton.querySelector('span')?.replaceChildren('Install App');
 
         if (!deferredInstallPrompt) {
             alert('The app is still preparing for installation. Use Chrome or Edge, refresh the page once, wait a few seconds, then tap Install App again.');
