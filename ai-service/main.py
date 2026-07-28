@@ -46,6 +46,11 @@ def health():
     }
 
 
+@app.get("/")
+def root():
+    return health()
+
+
 @app.get("/api/v1/model")
 def model():
     names = getattr(YOLO_MODEL, "names", None) if YOLO_MODEL is not None else None
