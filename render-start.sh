@@ -1,10 +1,22 @@
 #!/usr/bin/env bash
 set -e
 
-mkdir -p /var/www/html/database /var/www/html/storage/app/public /var/www/html/storage/app/private
+mkdir -p \
+    "$(dirname "${DB_DATABASE:-/var/www/html/database/database.sqlite}")" \
+    "${LOCAL_FILESYSTEM_ROOT:-/var/www/html/storage/app/private}" \
+    "${PUBLIC_FILESYSTEM_ROOT:-/var/www/html/storage/app/public}" \
+    /var/www/html/storage/framework/cache/data \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/logs
 touch "${DB_DATABASE:-/var/www/html/database/database.sqlite}"
 
-chown -R www-data:www-data /var/www/html/database /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data \
+    "$(dirname "${DB_DATABASE:-/var/www/html/database/database.sqlite}")" \
+    "${LOCAL_FILESYSTEM_ROOT:-/var/www/html/storage/app/private}" \
+    "${PUBLIC_FILESYSTEM_ROOT:-/var/www/html/storage/app/public}" \
+    /var/www/html/storage \
+    /var/www/html/bootstrap/cache
 
 if [ -n "$PORT" ]; then
     sed -ri -e "s/^Listen 80$/Listen $PORT/" /etc/apache2/ports.conf

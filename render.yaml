@@ -2,11 +2,15 @@ services:
   - type: web
     name: crabs
     runtime: docker
-    plan: free
+    plan: starter
     region: singapore
     branch: main
     autoDeployTrigger: commit
     healthCheckPath: /
+    disk:
+      name: crabs-persistent-data
+      mountPath: /var/www/html/persist
+      sizeGB: 1
     envVars:
       - key: APP_NAME
         value: Crab Recognition AI
@@ -23,7 +27,7 @@ services:
       - key: DB_CONNECTION
         value: sqlite
       - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
+        value: /var/www/html/persist/database/database.sqlite
       - key: SESSION_DRIVER
         value: database
       - key: SESSION_LIFETIME
@@ -36,6 +40,10 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: local
+      - key: LOCAL_FILESYSTEM_ROOT
+        value: /var/www/html/persist/storage/app/private
+      - key: PUBLIC_FILESYSTEM_ROOT
+        value: /var/www/html/persist/storage/app/public
       - key: AI_SERVICE_URL
         fromService:
           type: web
