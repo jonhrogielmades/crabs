@@ -17,10 +17,13 @@ WORKDIR /var/www/html
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        libcurl4-openssl-dev \
         libicu-dev \
+        libonig-dev \
+        libsqlite3-dev \
         libzip-dev \
         unzip \
-    && docker-php-ext-install intl opcache pdo_sqlite zip \
+    && docker-php-ext-install bcmath curl intl mbstring opcache pdo_sqlite zip \
     && a2enmod rewrite headers \
     && sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
