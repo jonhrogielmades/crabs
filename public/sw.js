@@ -1,5 +1,5 @@
-const CACHE_NAME = 'crabai-shell-v2';
-const SHELL = ['/', '/offline', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'];
+const CACHE_NAME = 'crabai-shell-v3';
+const SHELL = ['/', '/offline', '/manifest.webmanifest', '/favicon.png', '/icons/icon-192.png', '/icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL)));

@@ -94,6 +94,7 @@ async function updateInstallButtonState() {
     if (!installAppButton) return;
 
     if (await isAppAlreadyInstalled()) {
+        installAppButton.hidden = false;
         installAppButton.classList.add('is-installed');
         installAppButton.setAttribute('aria-label', 'App already installed');
         installAppButton.title = 'App already installed';
@@ -102,9 +103,10 @@ async function updateInstallButtonState() {
     }
 
     installAppButton.classList.remove('is-installed');
-    installAppButton.setAttribute('aria-label', deferredInstallPrompt ? 'Install app' : 'Install app unavailable');
-    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Install is not available yet in this browser';
-    installAppButton.querySelector('span')?.replaceChildren(deferredInstallPrompt ? 'Install App' : 'Open in Chrome');
+    installAppButton.hidden = !deferredInstallPrompt;
+    installAppButton.setAttribute('aria-label', 'Install app');
+    installAppButton.title = 'Install app';
+    installAppButton.querySelector('span')?.replaceChildren('Install App');
 }
 
 function openAuthModal(mode = 'login') {
