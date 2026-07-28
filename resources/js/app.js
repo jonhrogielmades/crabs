@@ -60,7 +60,6 @@ const moreOpenButtons = Array.from(document.querySelectorAll('[data-more-open]')
 const mapBoard = document.querySelector('[data-map-points]');
 const mapGrid = document.getElementById('recognitionMapGrid');
 let stream;
-const installedAppStorageKey = 'crab-recognition-ai-installed';
 
 function isRunningAsInstalledApp() {
     return window.matchMedia('(display-mode: standalone)').matches
@@ -70,10 +69,6 @@ function isRunningAsInstalledApp() {
 
 async function isAppAlreadyInstalled() {
     if (isRunningAsInstalledApp()) {
-        return true;
-    }
-
-    if (localStorage.getItem(installedAppStorageKey) === 'true') {
         return true;
     }
 
@@ -103,9 +98,9 @@ async function updateInstallButtonState() {
     }
 
     installAppButton.classList.remove('is-installed');
-    installAppButton.hidden = !deferredInstallPrompt;
+    installAppButton.hidden = false;
     installAppButton.setAttribute('aria-label', 'Install app');
-    installAppButton.title = 'Install app';
+    installAppButton.title = deferredInstallPrompt ? 'Install app' : 'Preparing install';
     installAppButton.querySelector('span')?.replaceChildren('Install App');
 }
 
@@ -201,7 +196,7 @@ installAppButton?.addEventListener('click', async () => {
         installAppButton.removeAttribute('aria-busy');
 
         if (!deferredInstallPrompt) {
-            alert('Install is not available yet. Open this site in Chrome or Edge, then wait a few seconds and tap Install App again.');
+            alert('The app is still preparing for installation. Use Chrome or Edge, refresh the page once, wait a few seconds, then tap Install App again.');
         }
 
         return;
@@ -220,7 +215,6 @@ installAppButton?.addEventListener('click', async () => {
 
 window.addEventListener('appinstalled', () => {
     deferredInstallPrompt = null;
-    localStorage.setItem(installedAppStorageKey, 'true');
     alert('Crab Recognition AI has been installed on this device.');
     updateInstallButtonState();
 });
