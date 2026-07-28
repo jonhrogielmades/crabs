@@ -55,6 +55,18 @@ services:
         value: "true"
       - key: AI_PROVIDER_ORDER
         value: gemini,anthropic,groq,openrouter,cohere,wisdomgate
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: COHERE_API_KEY
+        sync: false
+      - key: WISDOMGATE_API_KEY
+        sync: false
 
   - type: web
     name: crabs-ai-service

@@ -22,6 +22,14 @@
         <div><dt>Provider order</dt><dd>{{ implode(', ', $providerOrder) ?: 'local' }}</dd></div>
         <div><dt>Active registry model</dt><dd>{{ $activeModel ? $activeModel->name.' '.$activeModel->version : 'None' }}</dd></div>
     </div>
+    <div class="mini-dl">
+        @foreach($providerStatus as $provider)
+            <div>
+                <dt>{{ ucfirst($provider['name']) }}</dt>
+                <dd>{{ $provider['configured'] ? 'Configured' : 'Missing API key' }} · {{ $provider['model'] ?: 'No model' }}</dd>
+            </div>
+        @endforeach
+    </div>
 </section>
 
 <form class="panel admin-form" method="post" action="{{ route('admin.models.store') }}">

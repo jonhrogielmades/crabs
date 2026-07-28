@@ -38,8 +38,22 @@ class AdminModelController extends Controller
             'aiStatus' => $health->status(),
             'aiUrl' => config('services.ai.url'),
             'providerOrder' => config('services.ai.provider_order', []),
+            'providerStatus' => $this->providerStatus(),
             'threshold' => config('services.ai.confidence_threshold'),
         ]);
+    }
+
+    private function providerStatus(): array
+    {
+        return collect(config('services.ai.provider_order', []))
+            ->reject(fn (string $provider) => $provider === 'local')
+            ->map(fn (string $provider) => [
+                'name' => $provider,
+                'model' => config("services.ai.providers.{$provider}.model"),
+                'configured' => filled(config("services.ai.providers.{$provider}.key")),
+            ])
+            ->values()
+            ->all();
     }
 
     public function store(Request $request)

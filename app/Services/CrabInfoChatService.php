@@ -42,7 +42,9 @@ class CrabInfoChatService
             }
         }
 
-        throw new RuntimeException('Crab chatbot providers are unavailable. '.implode(' | ', $errors));
+        report(new RuntimeException('Crab chatbot providers are unavailable. '.implode(' | ', $errors)));
+
+        return $this->fallbackAnswer($message);
     }
 
     private function withGemini(string $message): array
@@ -239,6 +241,16 @@ PROMPT;
             'How can I identify a mud crab?',
             'What habitats do swimming crabs prefer?',
             'What crab traits should I photograph?',
+        ];
+    }
+
+    private function fallbackAnswer(string $message): array
+    {
+        return [
+            'answer' => 'The online AI providers are not available right now, so I am using the local crab reference library. For identification, photograph the whole crab in bright light, include the carapace, claws, legs, and any color markings, then compare those traits with the supported species in the app.',
+            'provider' => 'local-fallback',
+            'model' => 'crab-reference-library',
+            'suggestions' => $this->suggestions(),
         ];
     }
 }
