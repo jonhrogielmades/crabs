@@ -12,10 +12,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="msapplication-TileColor" content="#0f766e">
     <meta name="msapplication-TileImage" content="/pwa-icon-192.png">
+    <meta name="color-scheme" content="light dark">
     <title>{{ $title ?? 'Crab Recognition AI' }}</title>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/pwa-icon-192.png">
+    <script>
+        (() => {
+            let theme = 'day';
+            try {
+                theme = localStorage.getItem('crabai-theme') === 'night' ? 'night' : 'day';
+            } catch {
+                theme = 'day';
+            }
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.style.colorScheme = theme === 'night' ? 'dark' : 'light';
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="@if(request()->routeIs('home')) landing-page @endif @if(request()->routeIs('dashboard')) dashboard-page @endif @if(request()->routeIs('recognition.history')) history-page @endif @if(request()->routeIs('profile.*') || request()->routeIs('recognition.map') || request()->routeIs('reports.*') || request()->routeIs('training.*') || request()->routeIs('models.comparison') || request()->routeIs('species.show')) feature-page @endif @if(request()->routeIs('login') || request()->routeIs('register')) auth-page @endif @if(request()->routeIs('recognition.create')) scan-page @endif @if(request()->routeIs('recognition.show')) result-page @endif @if(request()->routeIs('crab-chat.index')) chat-page @endif">
@@ -56,6 +69,11 @@
     <header class="topbar">
         <a class="brand mobile-brand" href="{{ route('home') }}"><span class="brand-mark"><img src="/images/crabai-logo.png" alt="CrabAI Pro logo"></span><span>CrabAI Pro</span></a>
         <div class="topbar-actions">
+            <button class="ghost-button theme-toggle" type="button" data-theme-toggle aria-label="Switch to night theme" aria-pressed="false">
+                <i class="theme-icon theme-icon-day" data-lucide="sun" aria-hidden="true"></i>
+                <i class="theme-icon theme-icon-night" data-lucide="moon" aria-hidden="true"></i>
+                <span data-theme-label>Night theme</span>
+            </button>
             @auth
                 <span class="user-chip">{{ auth()->user()->name }}</span>
                 <form method="post" action="{{ route('logout') }}">@csrf<button class="ghost-button" aria-label="Logout"><i data-lucide="log-out"></i><span>Logout</span></button></form>

@@ -5,10 +5,10 @@
     <a class="button dashboard-primary-action" href="{{ route('recognition.create') }}"><i data-lucide="camera"></i>New Scan</a>
 </section>
 <section class="stats dashboard-stats">
-    <div class="dashboard-stat"><i data-lucide="file-search"></i><span>Total scans</span><strong>{{ $total }}</strong></div>
-    <div class="dashboard-stat success"><i data-lucide="check-circle-2"></i><span>Successful</span><strong>{{ $successful }}</strong></div>
-    <div class="dashboard-stat warning"><i data-lucide="alert-triangle"></i><span>Low confidence</span><strong>{{ $low }}</strong></div>
-    <div class="dashboard-stat info"><i data-lucide="database"></i><span>Crab data</span><strong>{{ $speciesCount }}</strong></div>
+    <div class="dashboard-stat"><span>Total scans</span><strong>{{ $total }}</strong><i class="dashboard-stat-icon" data-lucide="scan-line" aria-hidden="true"></i></div>
+    <div class="dashboard-stat success"><span>Successful</span><strong>{{ $successful }}</strong><i class="dashboard-stat-icon" data-lucide="badge-check" aria-hidden="true"></i></div>
+    <div class="dashboard-stat warning"><span>Low confidence</span><strong>{{ $low }}</strong><i class="dashboard-stat-icon" data-lucide="shield-alert" aria-hidden="true"></i></div>
+    <div class="dashboard-stat info"><span>Crab data</span><strong>{{ $speciesCount }}</strong><i class="dashboard-stat-icon" data-lucide="database" aria-hidden="true"></i></div>
 </section>
 <section class="status-strip dashboard-status"><span class="status-dot {{ $aiStatus === 'online' ? 'online' : '' }}"></span><div><strong>AI recognition {{ $aiStatus }}</strong><span>{{ $aiStatusDetail }}</span></div></section>
 <section class="section-title dashboard-section-title"><div><p class="eyebrow">Activity</p><h2>Recent Results</h2></div><a href="{{ route('recognition.history') }}">View all <i data-lucide="arrow-right"></i></a></section>

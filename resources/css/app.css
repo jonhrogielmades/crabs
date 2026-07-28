@@ -2486,13 +2486,11 @@ body.dashboard-page{
 }
 .dashboard-stat{
     display:grid;
-    grid-template-columns:36px minmax(0,1fr);
-    grid-template-areas:"icon label" "icon value";
-    align-items:center;
-    column-gap:9px;
+    align-content:center;
+    gap:12px;
     min-width:0;
     min-height:92px;
-    padding:12px;
+    padding:14px 88px 14px 14px;
     border-color:#d9eeeb;
     background:linear-gradient(180deg,#fff,#f7fcfb);
     box-shadow:0 12px 30px rgba(15,23,42,.07);
@@ -2501,18 +2499,7 @@ body.dashboard-page{
     height:2px;
     background:#0f766e;
 }
-.dashboard-stat svg{
-    grid-area:icon;
-    width:36px;
-    height:36px;
-    margin:0;
-    padding:9px;
-    border-radius:8px;
-    background:#e6f6f3;
-    color:#0f766e;
-}
 .dashboard-stat span{
-    grid-area:label;
     min-width:0;
     margin:0;
     color:#64748b;
@@ -2523,22 +2510,35 @@ body.dashboard-page{
     letter-spacing:.04em;
 }
 .dashboard-stat strong{
-    grid-area:value;
     min-width:0;
     color:#12201f;
     font-size:clamp(22px,7vw,30px);
     line-height:1;
 }
-.dashboard-stat.success svg{
-    background:#ecfdf5;
+.dashboard-stat-icon,
+.dashboard-stat > svg.dashboard-stat-icon,
+.dashboard-stat > svg.lucide{
+    position:absolute;
+    right:10px;
+    bottom:8px;
+    display:block;
+    width:76px !important;
+    height:76px !important;
+    color:#0f766e;
+    opacity:.78;
+    stroke-width:1.9;
+    pointer-events:none;
+}
+.dashboard-stat.success .dashboard-stat-icon,
+.dashboard-stat.success > svg.lucide{
     color:#047857;
 }
-.dashboard-stat.warning svg{
-    background:#fff7ed;
+.dashboard-stat.warning .dashboard-stat-icon,
+.dashboard-stat.warning > svg.lucide{
     color:#c2410c;
 }
-.dashboard-stat.info svg{
-    background:#eff6ff;
+.dashboard-stat.info .dashboard-stat-icon,
+.dashboard-stat.info > svg.lucide{
     color:#2563eb;
 }
 .dashboard-status{
@@ -2656,15 +2656,16 @@ body.dashboard-page{
         gap:7px;
     }
     .dashboard-stat{
-        grid-template-columns:32px minmax(0,1fr);
-        column-gap:8px;
         min-height:86px;
-        padding:10px 8px;
+        padding:10px clamp(48px,16vw,54px) 10px 8px;
     }
-    .dashboard-stat svg{
-        width:32px;
-        height:32px;
-        padding:8px;
+    .dashboard-stat-icon,
+    .dashboard-stat > svg.dashboard-stat-icon,
+    .dashboard-stat > svg.lucide{
+        right:6px;
+        bottom:6px;
+        width:clamp(46px,15vw,50px) !important;
+        height:clamp(46px,15vw,50px) !important;
     }
     .dashboard-stat span{
         font-size:10px;
@@ -2679,6 +2680,33 @@ body.dashboard-page{
     .dashboard-section-title a{
         width:100%;
         justify-content:center;
+    }
+}
+@media(max-width:430px){
+    .dashboard-stats{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+    }
+    .dashboard-stat{
+        min-height:128px;
+        padding:15px clamp(56px,18vw,64px) 15px 14px;
+    }
+    .dashboard-stat span{
+        font-size:12px;
+        line-height:1.25;
+    }
+    .dashboard-stat strong{
+        font-size:32px;
+    }
+    .dashboard-stat-icon,
+    .dashboard-stat > svg.dashboard-stat-icon,
+    .dashboard-stat > svg.lucide{
+        right:6px;
+        bottom:6px;
+        width:clamp(46px,15vw,50px) !important;
+        height:clamp(46px,15vw,50px) !important;
+        opacity:.82;
+        stroke-width:1.9;
     }
 }
 
@@ -4112,4 +4140,466 @@ body.chat-page{
     .feature-page .model-metrics div{
         min-height:58px;
     }
+}
+
+/* Day and night theme */
+.theme-toggle{
+    position:relative;
+}
+.theme-toggle .theme-icon{
+    flex:0 0 auto;
+}
+.theme-toggle .theme-icon-night{
+    display:none !important;
+}
+html[data-theme="day"] .theme-toggle .theme-icon-day{
+    display:block !important;
+}
+html[data-theme="day"] .theme-toggle .theme-icon-night{
+    display:none !important;
+}
+html[data-theme="night"] .theme-toggle .theme-icon-day{
+    display:none !important;
+}
+html[data-theme="night"] .theme-toggle .theme-icon-night{
+    display:block !important;
+}
+html[data-theme="night"]{
+    color-scheme:dark;
+    --primary:#2dd4bf;
+    --primary-dark:#99f6e4;
+    --accent:#60a5fa;
+    --ink:#ecfeff;
+    --muted:#a8bac1;
+    --line:#254843;
+    --soft:#102a27;
+    --panel:#0f211f;
+    --shadow:0 18px 50px rgba(0,0,0,.42);
+}
+html[data-theme="night"] body{
+    background:#061210;
+    color:var(--ink);
+}
+html[data-theme="night"] .app-frame,
+html[data-theme="night"] .workspace{
+    background:linear-gradient(180deg,#0b1917 0,#071210 100%);
+}
+html[data-theme="night"] .app-frame{
+    box-shadow:0 0 0 1px rgba(94,234,212,.14),0 24px 80px rgba(0,0,0,.42);
+}
+html[data-theme="night"] .sidebar{
+    background:#061210;
+    border-color:#1f3b36;
+}
+html[data-theme="night"] .topbar,
+html[data-theme="night"] .bottom-nav,
+html[data-theme="night"] .more-sheet-panel,
+html[data-theme="night"] .auth-modal-panel{
+    background:rgba(8,25,22,.96);
+    border-color:var(--line);
+    color:var(--ink);
+    box-shadow:0 12px 36px rgba(0,0,0,.36);
+}
+html[data-theme="night"] .notice,
+html[data-theme="night"] .panel,
+html[data-theme="night"] .card,
+html[data-theme="night"] .toast,
+html[data-theme="night"] .status-strip,
+html[data-theme="night"] .auth-card,
+html[data-theme="night"] .auth-panel,
+html[data-theme="night"] .row,
+html[data-theme="night"] .stats div,
+html[data-theme="night"] .dashboard-stat,
+html[data-theme="night"] .dashboard-row,
+html[data-theme="night"] .dashboard-empty,
+html[data-theme="night"] .dashboard-status,
+html[data-theme="night"] .compact-row,
+html[data-theme="night"] .pagination a,
+html[data-theme="night"] .pagination span,
+html[data-theme="night"] .result-field,
+html[data-theme="night"] .result-alert,
+html[data-theme="night"] .result-page .result-details,
+html[data-theme="night"] .result-page .result-consensus,
+html[data-theme="night"] .result-page .feedback-card,
+html[data-theme="night"] .result-page .professional-note,
+html[data-theme="night"] .scan-page .scan-checklist,
+html[data-theme="night"] .scan-page .scan-action-card,
+html[data-theme="night"] .offline-queue-panel,
+html[data-theme="night"] .scan-assist-row,
+html[data-theme="night"] .feature-page .species-detail-panel,
+html[data-theme="night"] .feature-page .profile-form,
+html[data-theme="night"] .feature-page .map-filters,
+html[data-theme="night"] .feature-page .reports-filters,
+html[data-theme="night"] .feature-page .training-filters,
+html[data-theme="night"] .feature-page .reports-panel,
+html[data-theme="night"] .feature-page .map-record-row,
+html[data-theme="night"] .feature-page .reports-row,
+html[data-theme="night"] .feature-page .training-row,
+html[data-theme="night"] .feature-page .model-compare-card,
+html[data-theme="night"] .feature-page .model-metrics div,
+html[data-theme="night"] .history-page .history-filters,
+html[data-theme="night"] .history-page .history-row,
+html[data-theme="night"] .admin-table-row,
+html[data-theme="night"] .admin-check-row,
+html[data-theme="night"] .model-config-panel,
+html[data-theme="night"] .feedback-review-card,
+html[data-theme="night"] .guidance-panel,
+html[data-theme="night"] .feedback-history-card,
+html[data-theme="night"] .dashboard-split,
+html[data-theme="night"] .chat-page .chat-log,
+html[data-theme="night"] .chat-page .chat-form,
+html[data-theme="night"] .chat-bubble{
+    border-color:var(--line);
+    background:linear-gradient(180deg,#10211f 0,#0b1a18 100%);
+    color:var(--ink);
+    box-shadow:0 12px 30px rgba(0,0,0,.26);
+}
+html[data-theme="night"] input,
+html[data-theme="night"] select,
+html[data-theme="night"] textarea{
+    border-color:var(--line);
+    background:#081714;
+    color:var(--ink);
+}
+html[data-theme="night"] input::placeholder,
+html[data-theme="night"] textarea::placeholder{
+    color:#78909a;
+}
+html[data-theme="night"] input:focus,
+html[data-theme="night"] select:focus,
+html[data-theme="night"] textarea:focus{
+    border-color:#5eead4;
+    box-shadow:0 0 0 4px rgba(45,212,191,.18);
+}
+html[data-theme="night"] h1,
+html[data-theme="night"] h2,
+html[data-theme="night"] h3,
+html[data-theme="night"] label,
+html[data-theme="night"] .brand,
+html[data-theme="night"] .mobile-brand,
+html[data-theme="night"] .auth-card-head h2,
+html[data-theme="night"] .dashboard-stat strong,
+html[data-theme="night"] .dashboard-row strong,
+html[data-theme="night"] .row strong,
+html[data-theme="night"] .stats strong,
+html[data-theme="night"] .result-field strong,
+html[data-theme="night"] .compact-row strong,
+html[data-theme="night"] .feature-page .reports-stat strong,
+html[data-theme="night"] .feature-page .training-stat strong,
+html[data-theme="night"] .feature-page .profile-stat strong,
+html[data-theme="night"] .feature-page .model-stat strong,
+html[data-theme="night"] .feature-page .reports-row strong,
+html[data-theme="night"] .feature-page .training-row strong,
+html[data-theme="night"] .feature-page .map-record-row strong,
+html[data-theme="night"] .feature-page .model-metrics strong,
+html[data-theme="night"] .history-page .history-row-link strong,
+html[data-theme="night"] .chat-bubble strong{
+    color:var(--ink);
+}
+html[data-theme="night"] p,
+html[data-theme="night"] small,
+html[data-theme="night"] .muted,
+html[data-theme="night"] .stats span,
+html[data-theme="night"] .row span,
+html[data-theme="night"] .dashboard-stat span,
+html[data-theme="night"] .dashboard-row span,
+html[data-theme="night"] .status-strip span:last-child,
+html[data-theme="night"] .auth-card-head p:not(.eyebrow),
+html[data-theme="night"] .result-field span,
+html[data-theme="night"] .compact-row span,
+html[data-theme="night"] .feature-page .reports-stat span,
+html[data-theme="night"] .feature-page .training-stat span,
+html[data-theme="night"] .feature-page .profile-stat span,
+html[data-theme="night"] .feature-page .model-stat span,
+html[data-theme="night"] .feature-page .reports-row span,
+html[data-theme="night"] .feature-page .training-row span,
+html[data-theme="night"] .feature-page .map-record-row span,
+html[data-theme="night"] .feature-page .map-record-row small,
+html[data-theme="night"] .history-page .history-row-link span,
+html[data-theme="night"] .history-page .history-row-link small,
+html[data-theme="night"] .chat-page .chat-head-copy{
+    color:var(--muted);
+}
+html[data-theme="night"] .eyebrow,
+html[data-theme="night"] .section-title a{
+    color:#5eead4;
+}
+html[data-theme="night"] .button{
+    background:linear-gradient(135deg,#14b8a6,#2563eb);
+    color:#fff;
+    box-shadow:0 10px 24px rgba(45,212,191,.18);
+}
+html[data-theme="night"] .button.muted,
+html[data-theme="night"] .ghost-button,
+html[data-theme="night"] .icon-button,
+html[data-theme="night"] .auth-modal-close,
+html[data-theme="night"] .topbar-actions .ghost-button,
+html[data-theme="night"] .dashboard-section-title a,
+html[data-theme="night"] .chat-page .chat-suggestions button{
+    border-color:#2d5a54;
+    background:#102c28;
+    color:#99f6e4;
+    box-shadow:0 8px 20px rgba(0,0,0,.24);
+}
+html[data-theme="night"] .button.danger,
+html[data-theme="night"] .icon-button.danger{
+    border-color:#f87171;
+    background:#3f1111;
+    color:#fecaca;
+}
+html[data-theme="night"] .badge,
+html[data-theme="night"] .chat-status-badge,
+html[data-theme="night"] .scan-page .scan-head .badge,
+html[data-theme="night"] .feature-page .map-count-badge,
+html[data-theme="night"] .feature-page .model-count-badge,
+html[data-theme="night"] .feature-page .model-scan-badge{
+    border-color:#2d5a54;
+    background:#113a34;
+    color:#99f6e4;
+}
+html[data-theme="night"] .bottom-nav a,
+html[data-theme="night"] .bottom-nav button,
+html[data-theme="night"] .pagination .page-count,
+html[data-theme="night"] .more-sheet-grid a{
+    color:#9fb2b9;
+}
+html[data-theme="night"] .bottom-nav a.active,
+html[data-theme="night"] .bottom-nav button.active,
+html[data-theme="night"] .more-sheet-grid a.active,
+html[data-theme="night"] .side-nav a.active{
+    background:#123d37;
+    color:#5eead4;
+}
+html[data-theme="night"] .species-icon,
+html[data-theme="night"] .auth-icon,
+html[data-theme="night"] .chat-avatar,
+html[data-theme="night"] .stats div>svg,
+html[data-theme="night"] .dashboard-row > svg,
+html[data-theme="night"] .feature-page .profile-stat svg,
+html[data-theme="night"] .feature-page .reports-stat svg,
+html[data-theme="night"] .feature-page .training-stat svg,
+html[data-theme="night"] .feature-page .model-stat svg,
+html[data-theme="night"] .upload-dropzone svg{
+    background:#123d37;
+    color:#5eead4;
+}
+html[data-theme="night"] .dashboard-stat-icon,
+html[data-theme="night"] .dashboard-stat > svg.dashboard-stat-icon,
+html[data-theme="night"] .dashboard-stat > svg.lucide{
+    color:#5eead4;
+    opacity:.9;
+}
+html[data-theme="night"] .dashboard-stat.success .dashboard-stat-icon,
+html[data-theme="night"] .dashboard-stat.success > svg.lucide,
+html[data-theme="night"] .feature-page .profile-stat.success svg,
+html[data-theme="night"] .feature-page .reports-stat.success svg,
+html[data-theme="night"] .feature-page .training-stat.success svg,
+html[data-theme="night"] .feature-page .model-stat.success svg{
+    background:#123d37;
+    color:#34d399;
+}
+html[data-theme="night"] .dashboard-stat.warning .dashboard-stat-icon,
+html[data-theme="night"] .dashboard-stat.warning > svg.lucide,
+html[data-theme="night"] .feature-page .reports-stat.warning svg,
+html[data-theme="night"] .feature-page .training-stat.warning svg{
+    background:#3b2412;
+    color:#fb923c;
+}
+html[data-theme="night"] .dashboard-stat.info .dashboard-stat-icon,
+html[data-theme="night"] .dashboard-stat.info > svg.lucide,
+html[data-theme="night"] .feature-page .profile-stat.info svg,
+html[data-theme="night"] .feature-page .reports-stat.info svg,
+html[data-theme="night"] .feature-page .training-stat.info svg,
+html[data-theme="night"] .feature-page .model-stat.info svg{
+    background:#102844;
+    color:#93c5fd;
+}
+html[data-theme="night"] .upload-dropzone,
+html[data-theme="night"] .check-list li:before,
+html[data-theme="night"] .feature-page .map-empty-list,
+html[data-theme="night"] .feature-page .training-empty,
+html[data-theme="night"] .feature-page .model-empty{
+    border-color:#2d5a54;
+    background:#0b211e;
+    color:var(--ink);
+}
+html[data-theme="night"] .chat-message.user-message .chat-avatar,
+html[data-theme="night"] .user-message .chat-bubble{
+    border-color:#14b8a6;
+    background:#0f766e;
+    color:#fff;
+}
+html[data-theme="night"] .user-message .chat-bubble strong,
+html[data-theme="night"] .user-message .chat-bubble p{
+    color:#fff;
+}
+html[data-theme="night"] .more-sheet-backdrop,
+html[data-theme="night"] .auth-modal-backdrop{
+    background:rgba(0,0,0,.68);
+}
+html[data-theme="night"] .result-image,
+html[data-theme="night"] video,
+html[data-theme="night"] .camera-stage,
+html[data-theme="night"] .feature-page .recognition-map-board{
+    border-color:var(--line);
+    background:#071210;
+}
+html[data-theme="night"] ::selection{
+    background:rgba(45,212,191,.32);
+    color:#ecfeff;
+}
+
+/* Theme visibility hardening for native controls and repeated menu cards */
+html[data-theme="day"] input,
+html[data-theme="day"] select,
+html[data-theme="day"] textarea{
+    background:#fff !important;
+    color:#12201f !important;
+    -webkit-text-fill-color:#12201f;
+}
+html[data-theme="day"] input::placeholder,
+html[data-theme="day"] textarea::placeholder{
+    color:#64748b !important;
+    -webkit-text-fill-color:#64748b;
+}
+html[data-theme="day"] option{
+    background:#fff;
+    color:#12201f;
+}
+html[data-theme="night"] input,
+html[data-theme="night"] select,
+html[data-theme="night"] textarea,
+html[data-theme="night"] .filters input,
+html[data-theme="night"] .filters select,
+html[data-theme="night"] .field-icon input,
+html[data-theme="night"] .feature-page .map-filters input,
+html[data-theme="night"] .feature-page .map-filters select,
+html[data-theme="night"] .feature-page .reports-filters input,
+html[data-theme="night"] .feature-page .reports-filters select,
+html[data-theme="night"] .feature-page .training-filters select,
+html[data-theme="night"] .history-page .history-filters input,
+html[data-theme="night"] .history-page .history-filters select,
+html[data-theme="night"] .chat-page .chat-input-wrap textarea,
+html[data-theme="night"] .result-page .feedback-card select,
+html[data-theme="night"] .result-page .feedback-card textarea{
+    border-color:#2d5a54 !important;
+    background:#081714 !important;
+    color:#ecfeff !important;
+    -webkit-text-fill-color:#ecfeff;
+    caret-color:#5eead4;
+    color-scheme:dark;
+}
+html[data-theme="night"] input::placeholder,
+html[data-theme="night"] textarea::placeholder{
+    color:#9fb2b9 !important;
+    opacity:1;
+    -webkit-text-fill-color:#9fb2b9;
+}
+html[data-theme="night"] select option{
+    background:#081714;
+    color:#ecfeff;
+}
+html[data-theme="night"] input[type="date"]::-webkit-calendar-picker-indicator{
+    filter:invert(1);
+    opacity:.72;
+}
+html[data-theme="night"] .input-icon svg,
+html[data-theme="night"] .field-icon svg{
+    color:#5eead4 !important;
+}
+html[data-theme="night"] .more-sheet-grid a,
+html[data-theme="night"] .more-sheet-grid a.active{
+    border-color:#2d5a54 !important;
+    background:linear-gradient(180deg,#10211f 0,#0b1a18 100%) !important;
+    color:#ecfeff !important;
+}
+html[data-theme="night"] .more-sheet-grid a.active{
+    border-color:#5eead4 !important;
+    box-shadow:inset 0 0 0 1px rgba(94,234,212,.2);
+}
+html[data-theme="night"] .more-sheet-grid a > svg{
+    background:#123d37 !important;
+    color:#5eead4 !important;
+}
+html[data-theme="night"] .more-sheet-grid strong,
+html[data-theme="night"] .more-sheet-head h2{
+    color:#ecfeff !important;
+}
+html[data-theme="night"] .more-sheet-grid small{
+    color:#b7cbd0 !important;
+}
+html[data-theme="night"] .more-sheet-grip{
+    background:#3f625d;
+}
+html[data-theme="night"] .empty,
+html[data-theme="night"] .history-empty,
+html[data-theme="night"] .map-empty-state{
+    border-color:#2d5a54;
+    background:#0b211e;
+    color:#b7cbd0;
+}
+html[data-theme="night"] .feature-copy,
+html[data-theme="night"] .professional-note,
+html[data-theme="night"] .auth-switch,
+html[data-theme="night"] .profile-form-head p,
+html[data-theme="night"] .upload-dropzone small{
+    color:#b7cbd0 !important;
+}
+html[data-theme="night"] .auth-switch a{
+    color:#5eead4 !important;
+}
+html[data-theme="night"] .user-chip{
+    border-color:#2d5a54;
+    background:#102c28;
+    color:#b7cbd0;
+}
+html[data-theme="night"] .pagination .disabled{
+    border-color:#243c39;
+    background:#071210;
+    color:#78909a;
+}
+html[data-theme="night"] .feature-filters,
+html[data-theme="night"] .feature-row,
+html[data-theme="night"] .feature-stats div,
+html[data-theme="night"] .metric-bars div,
+html[data-theme="night"] .map-marker span,
+html[data-theme="night"] .species-card,
+html[data-theme="night"] .species-habitat,
+html[data-theme="night"] .checklist-head span,
+html[data-theme="night"] .functional-check-list label{
+    border-color:#2d5a54 !important;
+    background:linear-gradient(180deg,#10211f 0,#0b1a18 100%) !important;
+    color:#ecfeff !important;
+}
+html[data-theme="night"] .functional-check-list li.is-checked label,
+html[data-theme="night"] .checklist-head span.is-ready{
+    border-color:#34d399 !important;
+    background:#123d37 !important;
+    color:#bbf7d0 !important;
+}
+html[data-theme="night"] .checklist-status.is-ready{
+    color:#34d399 !important;
+}
+html[data-theme="night"] .feature-row strong,
+html[data-theme="night"] .metric-bars strong,
+html[data-theme="night"] .map-marker span strong,
+html[data-theme="night"] .species-card h3,
+html[data-theme="night"] .species-habitat strong{
+    color:#ecfeff !important;
+}
+html[data-theme="night"] .feature-row span,
+html[data-theme="night"] .feature-row small,
+html[data-theme="night"] .metric-bars span,
+html[data-theme="night"] .map-marker small,
+html[data-theme="night"] .species-description,
+html[data-theme="night"] .checklist-status{
+    color:#b7cbd0 !important;
+}
+html[data-theme="night"] .species-scientific,
+html[data-theme="night"] .feature-row span svg{
+    color:#5eead4 !important;
+}
+html[data-theme="night"] .species-card .species-icon{
+    background:#123d37 !important;
+    color:#5eead4 !important;
 }

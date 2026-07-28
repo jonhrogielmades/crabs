@@ -1,6 +1,42 @@
-import { createIcons, Activity, AlertTriangle, ArrowRight, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Pencil, Plus, RefreshCw, Save, Search, SendHorizontal, Settings, ShieldCheck, Smartphone, Sparkles, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } from 'lucide';
+import { createIcons, Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } from 'lucide';
 
-createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Pencil, Plus, RefreshCw, Save, Search, SendHorizontal, Settings, ShieldCheck, Smartphone, Sparkles, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } });
+createIcons({ icons: { Activity, AlertTriangle, ArrowRight, BadgeCheck, BarChart3, Bot, Camera, CheckCircle2, ClipboardCheck, Clock3, Database, Download, ExternalLink, FileSearch, FileText, Filter, Gauge, History, Home, Info, Leaf, LockKeyhole, LogIn, LogOut, Mail, MapPin, Menu, MessageCircle, Moon, Pencil, Plus, RefreshCw, Save, ScanLine, Search, SendHorizontal, Settings, ShieldAlert, ShieldCheck, Smartphone, Sparkles, Sun, Trash2, Upload, UserPlus, UserRound, Users, WifiOff, X } });
+
+const themeToggle = document.querySelector('[data-theme-toggle]');
+const themeLabel = themeToggle?.querySelector('[data-theme-label]');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+function setAppTheme(theme, persist = true) {
+    const nextTheme = theme === 'night' ? 'night' : 'day';
+    const isNight = nextTheme === 'night';
+
+    document.documentElement.dataset.theme = nextTheme;
+    document.documentElement.style.colorScheme = isNight ? 'dark' : 'light';
+    themeColorMeta?.setAttribute('content', isNight ? '#071a18' : '#0f766e');
+
+    if (themeToggle) {
+        themeToggle.setAttribute('aria-pressed', String(isNight));
+        themeToggle.setAttribute('aria-label', isNight ? 'Switch to day theme' : 'Switch to night theme');
+        themeToggle.title = isNight ? 'Switch to day theme' : 'Switch to night theme';
+    }
+
+    if (themeLabel) {
+        themeLabel.textContent = isNight ? 'Day theme' : 'Night theme';
+    }
+
+    if (persist) {
+        try {
+            localStorage.setItem('crabai-theme', nextTheme);
+        } catch {
+            // Theme still applies for this page even when storage is unavailable.
+        }
+    }
+}
+
+setAppTheme(document.documentElement.dataset.theme, false);
+themeToggle?.addEventListener('click', () => {
+    setAppTheme(document.documentElement.dataset.theme === 'night' ? 'day' : 'night');
+});
 
 let deferredInstallPrompt;
 let serviceWorkerReady = false;
