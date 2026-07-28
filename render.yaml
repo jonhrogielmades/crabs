@@ -26,6 +26,10 @@ services:
         value: /var/www/html/database/database.sqlite
       - key: SESSION_DRIVER
         value: database
+      - key: SESSION_LIFETIME
+        value: "43200"
+      - key: SESSION_EXPIRE_ON_CLOSE
+        value: "false"
       - key: CACHE_STORE
         value: database
       - key: QUEUE_CONNECTION
