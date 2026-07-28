@@ -173,7 +173,6 @@ installAppButton?.addEventListener('click', async () => {
     }
 
     if (!deferredInstallPrompt) {
-        alert('To install the app, open your browser menu and choose Add to Home Screen or Install app.');
         return;
     }
 
