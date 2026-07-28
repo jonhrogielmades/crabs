@@ -1,0 +1,90 @@
+services:
+  - type: web
+    name: crabs
+    runtime: docker
+    plan: starter
+    region: singapore
+    branch: main
+    autoDeployTrigger: commit
+    healthCheckPath: /
+    disk:
+      name: crabs-sqlite
+      mountPath: /var/www/html/database
+      sizeGB: 1
+    envVars:
+      - key: APP_NAME
+        value: Crab Recognition AI
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: ASSET_URL
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: debug
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /var/www/html/database/database.sqlite
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: AI_SERVICE_URL
+        fromService:
+          type: web
+          name: crabs-ai-service
+          property: hostport
+      - key: AI_SERVICE_TOKEN
+        sync: false
+      - key: AI_REQUEST_TIMEOUT
+        value: "60"
+      - key: AI_CONFIDENCE_THRESHOLD
+        value: "0.60"
+      - key: AI_HIGH_CONFIDENCE_THRESHOLD
+        value: "0.85"
+      - key: AI_CONSENSUS_ENABLED
+        value: "true"
+      - key: AI_MIN_PROVIDER_AGREEMENT
+        value: "2"
+      - key: AI_ALLOW_SINGLE_PROVIDER_RESULT
+        value: "true"
+      - key: AI_GLOBAL_DETECTION
+        value: "true"
+      - key: AI_PROVIDER_ORDER
+        value: gemini,anthropic,groq,openrouter,cohere,wisdomgate
+
+  - type: web
+    name: crabs-ai-service
+    runtime: python
+    plan: starter
+    region: singapore
+    branch: main
+    rootDir: ai-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: AI_SERVICE_TOKEN
+        sync: false
+      - key: AI_MODEL_NAME
+        value: YOLO Crab Recognition Adapter
+      - key: AI_MODEL_VERSION
+        value: placeholder-1.0.0
+      - key: AI_MODEL_CONFIDENCE_THRESHOLD
+        value: "0.60"
+      - key: AI_MODEL_CLASSES
+        value: ""
+      - key: AI_MODEL_PATH
+        value: ""
